@@ -65,7 +65,7 @@ def processar_pagina(pedidos):
     table_name = "bling_pedidos"
 
     if not table_exists(cursor, table_name):
-        create_table_query = f"CREATE TABLE {table_name} (numero_pedido INT PRIMARY KEY, numero_pedido_loja VARCHAR(255), vendedor VARCHAR(255), desconto FLOAT, observacoes VARCHAR(255), observacao_interna VARCHAR(255), data_pedido DATE, valor_frete FLOAT, total_produtos FLOAT, total_venda FLOAT, situacao VARCHAR(255), loja VARCHAR(255), data_prevista DATE, tipo_integracao VARCHAR(255), cliente_nome VARCHAR(255), cliente_cnpj VARCHAR(255), endereco VARCHAR(255), numero_endereco VARCHAR(255), cidade VARCHAR(255), uf VARCHAR(255), ie VARCHAR(255), rg INT, numero_cliente VARCHAR(255), complemento VARCHAR(255), bairro VARCHAR(255), cep VARCHAR(255), email VARCHAR(255), celular VARCHAR(20), fone VARCHAR(255))"
+        create_table_query = f"CREATE TABLE {table_name} (numero_pedido INT PRIMARY KEY, numero_pedido_loja VARCHAR(255), vendedor VARCHAR(255), desconto VARCHAR(255), observacoes VARCHAR(255), observacao_interna VARCHAR(255), data_pedido DATE, valor_frete FLOAT, total_produtos FLOAT, total_venda FLOAT, situacao VARCHAR(255), loja VARCHAR(255), data_prevista DATE, tipo_integracao VARCHAR(255), cliente_nome VARCHAR(255), cliente_cnpj VARCHAR(255), endereco VARCHAR(255), numero_endereco VARCHAR(255), cidade VARCHAR(255), uf VARCHAR(255), ie VARCHAR(255), rg VARCHAR(255), numero_cliente VARCHAR(255), complemento VARCHAR(255), bairro VARCHAR(255), cep VARCHAR(255), email VARCHAR(255), celular VARCHAR(20), fone VARCHAR(255))"
         cursor.execute(create_table_query)
         cnx.commit()
         print(f"A tabela '{table_name}' foi criada com sucesso.")
@@ -81,7 +81,7 @@ def processar_pagina(pedidos):
         numero_pedido = int(pedido['pedido']['numero'])
         numero_pedido_loja = pedido['pedido'].get('numeroPedidoLoja')
         vendedor = pedido['pedido']['vendedor']
-        desconto = pedido['pedido']['desconto']
+        desconto = pedido['pedido'].get('desconto')
         observacoes = pedido['pedido']['observacoes']
         observacao_interna = pedido['pedido']['observacaointerna']
         data_pedido = pedido['pedido']['data']
@@ -134,12 +134,14 @@ def obter_pedidos():
 
     # Formata as datas no formato "DD/MM/AAAA"
     data_atual_formatada = data_atual.strftime('%d/%m/%Y')
+    #data_atual_formatada=('22/05/2023')
     data_7_dias_atras_formatada = data_7_dias_atras.strftime('%d/%m/%Y')
+    #data_7_dias_atras_formatada=('26/12/2022')
 
     # Parâmetros da requisição
     params = {
         'apikey': api_key,
-        'filters': f'dataEmissao[{data_7_dias_atras_formatada} TO {data_atual_formatada}];idSituacao[6,9]'
+        'filters': f'dataEmissao[{data_7_dias_atras_formatada} TO {data_atual_formatada}]'
     }
     print(params)
     # URL da API para obter pedidos
