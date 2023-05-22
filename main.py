@@ -3,7 +3,7 @@ import requests
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from datetime import datetime
+from datetime import datetime, timedelta
 
 def enviar_email():
     email_de = 'site@clubedoeletronico.com'  # E-mail remetente
@@ -128,11 +128,25 @@ def obter_pedidos():
     # Chave da API do Bling
     api_key = '36c578d5a5cabae531eb8b58e18077e2a7b1c28508d3a56794e0ec82dc02e787fa83e1a5'
 
-    # URL da API para obter pedidos
-    url = f'https://bling.com.br/Api/v2/pedidos/json?apikey={api_key}'
+    # Obtém a data atual e a data de 7 dias atrás
+    data_atual = datetime.now()
+    data_7_dias_atras = data_atual - timedelta(days=7)
 
-    # Faz uma requisição GET para a API do Bling
-    response = requests.get(url)
+    # Formata as datas no formato "DD/MM/AAAA"
+    data_atual_formatada = data_atual.strftime('%d/%m/%Y')
+    data_7_dias_atras_formatada = data_7_dias_atras.strftime('%d/%m/%Y')
+
+    # Parâmetros da requisição
+    params = {
+        'apikey': api_key,
+        'filters': f'dataEmissao[{data_7_dias_atras_formatada} TO {data_atual_formatada}];idSituacao[6,9]'
+    }
+    print(params)
+    # URL da API para obter pedidos
+    url = 'https://bling.com.br/Api/v2/pedidos/json'
+
+    # Faz uma requisição GET para a API do Bling com os parâmetros
+    response = requests.get(url, params=params)
 
     # Verifica se a requisição foi bem-sucedida
     if response.status_code == 200:
