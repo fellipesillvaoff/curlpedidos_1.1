@@ -1,0 +1,22 @@
+env:
+  - name: API_KEY
+    required: true
+    value: "36c578d5a5cabae531eb8b58e18077e2a7b1c28508d3a56794e0ec82dc02e787fa83e1a5"
+  - name: FROM_EMAIL
+    required: true
+    value: "site@clubedoeletronico.com"
+  - name: FROM_PASSWORD
+    required: true
+    value: "Mestrado2020*"
+  - name: TO_EMAIL
+    required: true
+    value: "sacclubedoeletronico@gmail.com"
+
+jobs:
+  hourly:
+    name: Processar Pedidos
+    schedule: "0 0 * * 0" # Executa todo domingo à meia-noite (UTC)
+    plugins:
+      - name: python
+        plan: pipfile
+    buildScript: python main.py
