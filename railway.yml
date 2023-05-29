@@ -10,12 +10,12 @@ env:
     value: "Mestrado2020*"
   - name: TO_EMAIL
     required: true
-    value: "sacclubedoeletronico@gmail.com"
+    value: "sa.cclubedoeletronico@gmail.com"
 
 jobs:
   hourly:
     name: Processar Pedidos
-    schedule: "0 0 * * 0" # Executa todo domingo à meia-noite (UTC)
+    schedule: "0 3 * * *"
     plugins:
       - name: python
         plan: pipfile
