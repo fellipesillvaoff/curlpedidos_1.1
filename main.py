@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 
 def enviar_email():
     email_de = 'site@clubedoeletronico.com'  # E-mail remetente
-    senha = 'Mestrado2020*'  # Senha do e-mail remetente
+    senha = 'XXXXXX*'  # Senha do e-mail remetente
     email_para = 'sacclubedoeletronico@gmail.com'  # E-mail destinatário
     assunto = 'Atualização banco de dados Processada'  # Assunto do e-mail
     corpo = 'O processamento do pedido foi concluído com sucesso. \nEsta é uma mensagem automática programada pelo banco de dados.'
